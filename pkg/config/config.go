@@ -2,14 +2,25 @@ package config
 
 // config file
 type Backend struct {
-	BaseDN      string
-	Datastore   string
-	Insecure    bool     // For LDAP backend only
-	Servers     []string // For LDAP backend only
-	NameFormat  string
-	GroupFormat string
-	SSHKeyAttr  string
-	UseGraphAPI bool // For ownCloud backend only
+	BaseDN        string
+	Datastore     string
+	Insecure      bool     // For LDAP and owncloud backend only
+	Servers       []string // For LDAP and owncloud backend only
+	NameFormat    string
+	GroupFormat   string
+	SSHKeyAttr    string
+	UseGraphAPI   bool   // For ownCloud backend only
+	Plugin        string // Path to plugin library, for plugin backend only
+	PluginHandler string // Name of plugin's main handler function
+	Database      string // For MySQL backend only TODO REname to match plugin
+}
+type Helper struct {
+	Enabled       bool
+	BaseDN        string
+	Datastore     string
+	Plugin        string // Path to plugin library, for plugin backend only
+	PluginHandler string // Name of plugin's main handler function
+	Database      string // For MySQL backend only TODO REname to match plugin
 }
 type Frontend struct {
 	AllowedBaseDNs []string // For LDAP backend only
@@ -40,7 +51,9 @@ type User struct {
 	Name          string
 	OtherGroups   []int
 	PassSHA256    string
+	PassBcrypt    string
 	PassAppSHA256 []string
+	PassAppBcrypt []string
 	PrimaryGroup  int
 	SSHKeys       []string
 	OTPSecret     string
@@ -60,7 +73,9 @@ type Group struct {
 }
 type Config struct {
 	API                API
-	Backend            Backend
+	Backend            Backend // Deprecated
+	Backends           []Backend
+	Helper             Helper
 	Debug              bool
 	WatchConfig        bool
 	YubikeyClientID    string
