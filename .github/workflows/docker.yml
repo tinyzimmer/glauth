@@ -30,7 +30,7 @@ jobs:
           docker buildx inspect --bootstrap
           curl -sSL https://gist.githubusercontent.com/ArturKlauser/0f0293c62f5626df0261ac994d8a46af/raw/33ef25b8a93f15310f0a4013deca3f8d20fc00a7/check-qemu-binfmt.sh | bash
       - name: log in github registry
-        run: docker login --username "${{ github.actor }}" --password "${{ secrets.GHCR_TOKEN }}" docker.pkg.github.com
+        run: docker login --username "${{ github.actor }}" --password "${{ secrets.GHCR_TOKEN }}" ghcr.io
       - name: build multiarch images
         run: docker buildx build -t ghcr.io/tinyzimmer/glauth:latest --platform linux/amd64,linux/arm64,linux/arm/v7 .
 #         run: docker buildx build -t ghcr.io/tinyzimmer/glauth:latest --platform linux/amd64,linux/arm64,linux/arm/v7 .
